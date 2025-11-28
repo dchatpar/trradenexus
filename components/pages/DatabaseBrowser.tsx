@@ -1,11 +1,16 @@
 
+
 import React, { useState } from 'react';
 import { useData } from '../../contexts/DataContext';
 import { PageHeader, GlassCard, Badge, Button } from '../common/Shared';
 import { MagnifyingGlassIcon, MapPinIcon, BriefcaseIcon, UserGroupIcon } from '../Icons';
 import { Company } from '../../types';
 
-const DatabaseBrowser: React.FC = () => {
+interface DatabaseBrowserProps {
+  onSelectCompany: (company: Company) => void;
+}
+
+const DatabaseBrowser: React.FC<DatabaseBrowserProps> = ({ onSelectCompany }) => {
   const { companies } = useData();
   const [search, setSearch] = useState('');
 
@@ -70,7 +75,7 @@ const DatabaseBrowser: React.FC = () => {
                      </div>
 
                     <div className="flex gap-2">
-                         <Button className="flex-1" variant="secondary">View Details</Button>
+                         <Button className="flex-1" variant="secondary" onClick={() => onSelectCompany(company)}>View Details</Button>
                          <Button className="flex-1 bg-green-600 hover:bg-green-500 border-none" onClick={() => handleAddLead(company)}>
                             <UserGroupIcon className="h-4 w-4 mr-2 inline" /> Add Lead
                          </Button>

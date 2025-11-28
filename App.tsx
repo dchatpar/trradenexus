@@ -1,4 +1,5 @@
 
+
 import React, { useState, useEffect } from 'react';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
 import { DataProvider } from './contexts/DataContext';
@@ -12,6 +13,8 @@ import LoginPage from './components/auth/LoginPage';
 import RegisterPage from './components/auth/RegisterPage';
 import OnboardingWizard from './components/wizard/OnboardingWizard';
 import LandingPage from './components/landing/LandingPage';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Company } from './types';
 
 // Import Pages
 import AdminDashboard from './components/admin/AdminDashboard';
@@ -39,7 +42,7 @@ import { TradeCalculatorPage, DocumentGeneratorPage } from './components/pages/T
 // New Core Pages
 import SystemWorkspacePage from './components/pages/SystemWorkspacePage';
 import NewSearchPage from './components/pages/NewSearchPage';
-import CompaniesPage from './components/pages/CompaniesPage';
+import CompanyProfilePage from './components/pages/CompanyProfilePage';
 
 // New Intelligence Pages
 import NexusPage from './components/pages/NexusPage';
@@ -71,6 +74,7 @@ const AppContent: React.FC = () => {
   const [authView, setAuthView] = useState<'landing' | 'login' | 'register'>('landing');
   const [showWizard, setShowWizard] = useState(false);
   const { user, isAuthenticated, isLoading } = useAuth();
+  const [selectedCompany, setSelectedCompany] = useState<Company | null>(null);
 
   // Check if wizard should be shown
   useEffect(() => {
@@ -86,6 +90,11 @@ const AppContent: React.FC = () => {
   const handleWizardComplete = () => {
       setShowWizard(false);
       setCurrentPage('workspaces');
+  };
+  
+  const handleNavigate = (page: string) => {
+    setSelectedCompany(null); // Clear selected company when navigating away
+    setCurrentPage(page);
   };
 
   const pageTitles: { [key: string]: string } = {
@@ -143,11 +152,14 @@ const AppContent: React.FC = () => {
   }
 
   const renderPage = () => {
+    if (selectedCompany) {
+      return <CompanyProfilePage company={selectedCompany} onBack={() => setSelectedCompany(null)} />;
+    }
+    
     switch (currentPage) {
-      case 'dashboard': return <Dashboard onNavigate={setCurrentPage} />;
+      case 'dashboard': return <Dashboard onNavigate={handleNavigate} />;
       case 'workspaces': return <SystemWorkspacePage />;
       case 'new-search': return <NewSearchPage />;
-      case 'companies': return <CompaniesPage />;
       
       case 'workshop': return <WorkshopPage />;
       case 'tickets': return <TicketsPage />;
@@ -166,7 +178,7 @@ const AppContent: React.FC = () => {
       case 'sustainability': return <SustainabilityPage />;
       case 'logistics': return <LogisticsPage />;
       
-      case 'database': return <DatabaseBrowser />;
+      case 'database': return <DatabaseBrowser onSelectCompany={setSelectedCompany} />;
       case 'leads': return <LeadCrmPage />;
       case 'deal-pipeline': return <DealPipelinePage />;
       case 'calendar': return <CalendarPage />;
@@ -187,13 +199,15 @@ const AppContent: React.FC = () => {
       case 'scenario-planner': return <ScenarioPlannerPage />;
       
       case 'admin':
-        if (user?.role !== 'admin') return <Dashboard onNavigate={setCurrentPage} />;
+        if (user?.role !== 'admin') return <Dashboard onNavigate={handleNavigate} />;
         return <AdminDashboard />;
         
       default:
-        return <Dashboard onNavigate={setCurrentPage} />;
+        return <Dashboard onNavigate={handleNavigate} />;
     }
   };
+  
+  const pageKey = selectedCompany ? `company-${selectedCompany.id}` : currentPage;
 
   return (
     // Only constrain overflow when in the authenticated app view
@@ -208,15 +222,15 @@ const AppContent: React.FC = () => {
         isOpen={sidebarOpen}
         setIsOpen={setSidebarOpen}
         currentPage={currentPage}
-        setCurrentPage={setCurrentPage}
+        setCurrentPage={handleNavigate}
       />
 
       {/* Main Content Layout - Flex Column */}
       <div className="flex-1 flex flex-col min-w-0 h-full relative">
         {/* Sticky Header */}
         <Header 
-            title={pageTitles[currentPage] || 'Dashboard'} 
-            onNavigate={setCurrentPage}
+            title={selectedCompany ? 'Company Profile' : (pageTitles[currentPage] || 'Dashboard')} 
+            onNavigate={handleNavigate}
             currentPage={currentPage}
         >
           <button onClick={() => setSidebarOpen(true)} className="lg:hidden p-2 text-slate-400 hover:text-white rounded-md hover:bg-white/10 transition-colors">
@@ -226,9 +240,18 @@ const AppContent: React.FC = () => {
 
         {/* Scrollable Area - This is the ONLY element that should scroll */}
         <main className="flex-1 overflow-x-hidden overflow-y-auto p-4 sm:p-6 lg:p-8 scroll-smooth custom-scrollbar relative">
-          <div className="max-w-[1600px] mx-auto min-h-full pb-20">
-             {renderPage()}
-          </div>
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={pageKey}
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -15 }}
+              transition={{ duration: 0.25 }}
+              className="max-w-[1600px] mx-auto min-h-full pb-20"
+            >
+              {renderPage()}
+            </motion.div>
+          </AnimatePresence>
         </main>
         
         <ChatBot />

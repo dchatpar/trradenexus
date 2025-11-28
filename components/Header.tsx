@@ -1,4 +1,5 @@
 
+
 import React, { useState } from 'react';
 import { UserCircleIcon, GlobeAltIcon, Bars3Icon, BellIcon } from './Icons';
 import { useAuth } from '../contexts/AuthContext';
@@ -20,7 +21,7 @@ const Header: React.FC<HeaderProps> = ({ children, title, onNavigate, currentPag
     { label: 'Home', id: 'dashboard' },
     { label: 'New Search', id: 'new-search' },
     { label: 'Workspaces', id: 'workspaces' },
-    { label: 'Companies', id: 'companies' }
+    { label: 'Companies', id: 'database' } // FIX: Was 'companies', now points to the correct 'database' page.
   ];
 
   return (
