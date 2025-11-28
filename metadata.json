@@ -1,0 +1,7 @@
+{
+  "name": "TradeNexus AI Dashboard",
+  "description": "An AI-powered dashboard for global trade analytics. It features key performance indicators, data visualizations, and a natural language query interface to gain insights from trade data.",
+  "requestFramePermissions": [
+    "microphone"
+  ]
+}
