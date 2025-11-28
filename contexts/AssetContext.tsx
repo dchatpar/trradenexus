@@ -1,5 +1,5 @@
 
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState, useEffect, useRef } from 'react';
 import { generateImage } from '../services/geminiService';
 
 interface AssetContextType {
@@ -23,21 +23,28 @@ export const AssetProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     })()
   );
   const [isLoading, setIsLoading] = useState(false);
+  const hasAttemptedRef = useRef(false);
 
   useEffect(() => {
     const loadAssets = async () => {
+      // Prevent infinite loops or redundant checks
+      if (hasAttemptedRef.current) return;
+      
       // Check if API key is present before trying
       if (!process.env.API_KEY) {
           console.warn("No API_KEY found, skipping AI asset generation.");
+          hasAttemptedRef.current = true;
           return;
       }
 
-      // Check if assets exist
+      // Check if critical assets exist
       if (logoUrl && illustrations['no_results'] && illustrations['welcome']) {
+        hasAttemptedRef.current = true;
         return;
       }
 
       setIsLoading(true);
+      hasAttemptedRef.current = true;
       
       let newLogoUrl = logoUrl;
       let quotaExceeded = false;

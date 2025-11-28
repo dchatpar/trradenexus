@@ -93,7 +93,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onLogin, onRegister }) => {
   const headerY = useTransform(scrollYProgress, [0, 0.1], [-20, 0]);
 
   return (
-    <div className="min-h-screen bg-slate-950 text-white overflow-x-hidden font-sans selection:bg-brand-500/30">
+    <div className="min-h-screen bg-slate-950 text-white overflow-x-hidden font-sans selection:bg-brand-500/30 w-full">
       
       {/* Sticky Navigation */}
       <motion.nav 

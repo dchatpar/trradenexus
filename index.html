@@ -87,9 +87,6 @@
         background-color: var(--bg-deep);
         color: #e2e8f0;
         -webkit-font-smoothing: antialiased;
-        overflow: hidden; /* Critical for single-page app feeling */
-        height: 100vh;
-        width: 100vw;
         margin: 0;
         padding: 0;
       }
@@ -127,7 +124,7 @@
         100% { transform: rotate(360deg); }
       }
 
-      /* Custom Scrollbar - Improved Visibility */
+      /* Custom Scrollbar */
       .custom-scrollbar::-webkit-scrollbar {
         width: 8px;
         height: 8px;
@@ -139,29 +136,26 @@
       .custom-scrollbar::-webkit-scrollbar-thumb {
         background: rgba(148, 163, 184, 0.2);
         border-radius: 4px;
-        border: 2px solid rgba(15, 23, 42, 0.5); /* Adds padding effect */
+        border: 2px solid rgba(15, 23, 42, 0.5);
       }
       .custom-scrollbar::-webkit-scrollbar-thumb:hover {
         background: rgba(148, 163, 184, 0.4);
       }
       
-      /* Ensure smooth scrolling globally */
       html { scroll-behavior: smooth; }
-      
-      /* Reset generic styles */
       * { box-sizing: border-box; }
     </style>
-  <script type="importmap">
+<script type="importmap">
 {
   "imports": {
     "@google/genai": "https://aistudiocdn.com/@google/genai@^1.30.0",
-    "recharts": "https://aistudiocdn.com/recharts@^3.5.1",
-    "react-dom/client": "https://aistudiocdn.com/react-dom@^19.2.0/client",
-    "react-dom": "https://aistudiocdn.com/react-dom@^19.2.0",
-    "react": "https://aistudiocdn.com/react@^19.2.0",
-    "react/": "https://aistudiocdn.com/react@^19.2.0/",
     "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
-    "framer-motion": "https://aistudiocdn.com/framer-motion@^11.0.8"
+    "react/": "https://aistudiocdn.com/react@^19.2.0/",
+    "react": "https://aistudiocdn.com/react@^19.2.0",
+    "recharts": "https://aistudiocdn.com/recharts@^3.5.1",
+    "@vitejs/plugin-react": "https://aistudiocdn.com/@vitejs/plugin-react@^5.1.1",
+    "vite": "https://aistudiocdn.com/vite@^7.2.4",
+    "framer-motion": "https://aistudiocdn.com/framer-motion@^12.23.24"
   }
 }
 </script>
@@ -170,5 +164,6 @@
     <div class="bg-noise"></div>
     <div class="aurora-bg"></div>
     <div id="root" class="h-full w-full"></div>
+    <script type="module" src="./index.tsx"></script>
   </body>
 </html>

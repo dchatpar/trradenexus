@@ -196,6 +196,7 @@ const AppContent: React.FC = () => {
   };
 
   return (
+    // Only constrain overflow when in the authenticated app view
     <div className="flex h-screen w-screen overflow-hidden text-slate-200 bg-slate-950">
       {showWizard && <OnboardingWizard onComplete={handleWizardComplete} />}
       

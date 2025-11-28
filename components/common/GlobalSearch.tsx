@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useRef } from 'react';
 import { MagnifyingGlassIcon } from '../Icons';
 import { useData } from '../../contexts/DataContext';
@@ -37,7 +36,7 @@ const GlobalSearch: React.FC = () => {
     if (!isOpen) return null;
 
     return (
-        <div className="fixed inset-0 z-[60] bg-black/80 backdrop-blur-sm flex items-start justify-center pt-[20vh]" onClick={() => setIsOpen(false)}>
+        <div className="fixed inset-0 z-[80] bg-black/80 backdrop-blur-sm flex items-start justify-center pt-[20vh]" onClick={() => setIsOpen(false)}>
             <div className="w-full max-w-2xl bg-[#1e293b] rounded-2xl shadow-2xl border border-white/10 overflow-hidden animate-fade-in" onClick={e => e.stopPropagation()}>
                 <div className="flex items-center px-4 py-4 border-b border-white/10">
                     <MagnifyingGlassIcon className="h-5 w-5 text-gray-400" />
