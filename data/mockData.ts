@@ -76,6 +76,7 @@ export const mockCampaigns: Campaign[] = [
 export const mockCallLogs: CallLog[] = [
   { id: '1', leadName: 'TechGlobal Inc', duration: '4m 32s', outcome: 'Connected', sentiment: 'Positive', timestamp: '10:30 AM', summary: 'Discussed pricing tiers, requested proposal.', recordingUrl: '#' },
   { id: '2', leadName: 'AgriCorp Ltd', duration: '0m 45s', outcome: 'Voicemail', sentiment: 'Neutral', timestamp: '11:15 AM', summary: 'Left voicemail regarding Q4 inventory.', recordingUrl: '#' },
+  // FIX: Changed 'name' to 'leadName' to match the CallLog interface.
   { id: '3', leadName: 'Vertex Systems', duration: '12m 10s', outcome: 'Connected', sentiment: 'Positive', timestamp: '01:45 PM', summary: 'Negotiated contract terms. Agreed to send draft.', recordingUrl: '#' },
   { id: '4', leadName: 'Apex Logistics', duration: '1m 20s', outcome: 'Busy', sentiment: 'Neutral', timestamp: '02:30 PM', summary: 'Line busy, scheduled callback.', recordingUrl: '#' },
 ];
