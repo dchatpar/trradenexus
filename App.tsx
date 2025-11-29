@@ -67,6 +67,7 @@ import ToastContainer from './components/common/Toast';
 import WorkshopPage from './components/pages/WorkshopPage';
 import TicketsPage from './components/pages/TicketsPage';
 import LegacySearchPage from './components/pages/LegacySearchPage';
+import HsCodeLookupPage from './components/HsCodeLookupPage';
 
 const AppContent: React.FC = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -198,6 +199,8 @@ const AppContent: React.FC = () => {
       case 'document-generator': return <DocumentGeneratorPage />;
       case 'scenario-planner': return <ScenarioPlannerPage />;
       
+      case 'hs-code-lookup': return <HsCodeLookupPage />;
+
       case 'admin':
         if (user?.role !== 'admin') return <Dashboard onNavigate={handleNavigate} />;
         return <AdminDashboard />;

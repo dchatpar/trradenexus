@@ -5,6 +5,7 @@ import { useData } from '../../contexts/DataContext';
 import { PageHeader, GlassCard, Badge, Button } from '../common/Shared';
 import { MagnifyingGlassIcon, MapPinIcon, BriefcaseIcon, UserGroupIcon } from '../Icons';
 import { Company } from '../../types';
+import { useNotification } from '../../contexts/NotificationContext';
 
 interface DatabaseBrowserProps {
   onSelectCompany: (company: Company) => void;
@@ -13,6 +14,7 @@ interface DatabaseBrowserProps {
 const DatabaseBrowser: React.FC<DatabaseBrowserProps> = ({ onSelectCompany }) => {
   const { companies } = useData();
   const [search, setSearch] = useState('');
+  const { addNotification } = useNotification();
 
   const filtered = companies.filter(c => 
     c.name.toLowerCase().includes(search.toLowerCase()) || 
@@ -21,7 +23,7 @@ const DatabaseBrowser: React.FC<DatabaseBrowserProps> = ({ onSelectCompany }) =>
   );
 
   const handleAddLead = (company: Company) => {
-      alert(`Added ${company.name} to your Lead CRM!`);
+      addNotification('success', `Added ${company.name} to your Lead CRM!`);
       // In a real app, this would dispatch an action to add to the leads store
   };
 

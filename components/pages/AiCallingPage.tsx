@@ -1,4 +1,5 @@
 
+
 import React, { useState, useEffect, useRef } from 'react';
 import { PageHeader, GlassCard, Button } from '../common/Shared';
 import { PhoneIcon, PlayIcon, PauseIcon, UserCircleIcon, MicrophoneIcon, XMarkIcon } from '../Icons';
@@ -23,20 +24,9 @@ const AiCallingPage: React.FC = () => {
     };
 
     const startLiveCall = async () => {
-        try {
-            setIsLiveCallActive(true);
-            setLiveTranscription([]);
-            sessionRef.current = await connectGeminiLive({
-                onOpen: () => console.log('Live Session Connected'),
-                onMessage: (text) => setLiveTranscription(prev => [...prev, text]),
-                onAudio: (level) => setAudioLevel(Math.min(level, 100)), // Cap level for visuals
-                onClose: () => setIsLiveCallActive(false)
-            });
-        } catch (e) {
-            console.error(e);
-            alert("Failed to connect to Live API");
-            setIsLiveCallActive(false);
-        }
+        // Feature is disabled in the service, so this will fail.
+        // UI should reflect this disabled state.
+        alert("Live AI Calling is temporarily disabled.");
     };
 
     const endLiveCall = () => {
@@ -112,7 +102,7 @@ const AiCallingPage: React.FC = () => {
 
                     <div className="space-y-4">
                          <div className="flex justify-between">
-                            <Button className="w-full mr-2 bg-green-600 hover:bg-green-500" onClick={startLiveCall}>Start AI Voice Call</Button>
+                            <Button className="w-full mr-2" onClick={startLiveCall} disabled>Start AI Voice Call</Button>
                             <Button className="w-full ml-2 bg-red-600 hover:bg-red-500">Pause Queue</Button>
                          </div>
                          <div className="pt-4 border-t border-white/10">
